@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Call Script Builder</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #f7f8fa; color: #1b2430; margin: 0; padding: 24px; }
+    main { max-width: 480px; margin: 0 auto; }
+    h1 { font-size: 28px; margin: 0 0 4px; }
+    p { margin: 0 0 20px; color: #4a5565; }
+    select, button { width: 100%; padding: 14px; font-size: 16px; margin-top: 12px; border-radius: 8px; box-sizing: border-box; }
+    select { border: 1px solid #c3cad4; background: #fff; }
+    button { background: #1f6f8b; color: #fff; border: 0; cursor: pointer; }
+    button:focus-visible, select:focus-visible { outline: 3px solid #1b2430; outline-offset: 2px; }
+    #script { white-space: pre-line; margin-top: 20px; padding: 16px; background: #fff; border-left: 4px solid #1f6f8b; line-height: 1.6; max-width: 70ch; }
+    #script:empty { display: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Call Script Builder</h1>
+    <p>Pick your situation. Get words you can read out on the call.</p>
+
+    <select id="situation" aria-label="Situation">
+      <option value="delivery">My delivery is late</option>
+      <option value="doctor">Book a doctor's appointment</option>
+      <option value="bank">Money cut but UPI payment failed</option>
+    </select>
+    <button onclick="showScript()">Get my script</button>
+
+    <div id="script"></div>
+  </main>
+
+  <script>
+    // The scripts live here. Try changing the words between the backticks (`).
+    // Anything in [square brackets] is a blank you fill in during the call.
+    const scripts = {
+      delivery: `Hello, I'm waiting for my order from [app name].
+Where are you right now?
+
+If they say "I'm nearby": "Okay, please call me when you reach. My landmark is [landmark]."
+If they say "I can't find the address": "I'll come down to [place]. Please wait there."
+
+Thank you!`,
+
+      doctor: `Hello, I'd like to book an appointment with Dr. [doctor's name].
+Do you have a slot today or tomorrow?
+
+If they ask your name: "My name is [your name]."
+If there is no slot: "What is the earliest day you have?"
+
+Could you please confirm the time once more? Thank you!`,
+
+      bank: `Hello, I made a UPI payment of Rs [amount] on [date].
+The money was cut from my account, but the payment failed.
+The transaction ID is [transaction ID].
+Could you please check and tell me when I will get the money back?
+
+If they say "it will come back in 3 to 5 days": "Could you give me a complaint number, please?"
+
+Safety: never share your OTP, PIN or CVV on a call. A real bank will not ask for them.`
+    };
+
+    function showScript() {
+      const choice = document.getElementById("situation").value;
+      document.getElementById("script").textContent = scripts[choice];
+    }
+  </script>
+</body>
+</html>
